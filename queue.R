@@ -1,6 +1,7 @@
 # REFERENCES:
 #
 # * http://adv-r.had.co.nz/R5.html [reference classes]
+# * http://www.inside-r.org/r-doc/methods/ReferenceClasses [reference classes]
 # * http://stackoverflow.com/questions/11789038/does-r-have-a-priority-queue-like-javas-priorityqueue
 #
 # ---------------------------------------------------------------------------------------------------------------------
@@ -19,6 +20,7 @@ Queue <- setRefClass(Class = "Queue",
                          'Returns the number of items in the queue.'
                          return(length(data))
                        },
+                       empty = function() {size() == 0},
                        #
                        push = function(item) {
                          'Inserts element at back of the queue.'
@@ -39,10 +41,12 @@ Queue <- setRefClass(Class = "Queue",
                          else pop()
                        },
                        #
-                       peek = function() {
-                         'Returns (but does not remove) the head of queue (or NULL if queue is empty).'
-                         if(size() == 0) return(NULL)
-                         else return(data[[1]])
+                       peek = function(pos = c(1)) {
+                         'Returns (but does not remove) specified positions in queue (or NULL if any one of them is not available).'
+                         if (size() < max(pos)) return(NULL)
+                         #
+                         if (length(pos) == 1) return(data[[pos]])
+                         else return(data[pos])
                        },
                        initialize=function(...) {
                          callSuper(...)
@@ -54,82 +58,45 @@ Queue <- setRefClass(Class = "Queue",
                      )
 )
 
-# Check out methods of generator object
-Queue$new()
-Queue$methods()
-Queue$fields()
-Queue$help()
-Queue$help(push)
-
-q1 <- Queue$new()
-q1$name <- "test queue"
-q1$name
-
-q1
-
-q2 <- Queue$new(name = "another test")
-q2$name
-
-# Set up some accessors for the name field
-#
-Queue$accessors("name")
-
-q2$getName()
-q2$setName("a new name")
-q2$getName()
-
-q2$push("item number one")
-q2$push(2)
-q2$push("third item")
-q2$size()
-q2$data
-
-q2$pop()
-q2$pop()
-q2$size()
-
-q2$peek()
-q2$size()
-
-q2$poll()
-q2$size()
-try(q2$pop())
-q2$peek()
-q2$poll()
-
 # PRIORITY QUEUE ------------------------------------------------------------------------------------------------------
 
-# SOME NOTES:
-#   SOME NOTES:
-#   SOME NOTES:
-#   SOME NOTES:
-#   
-#   stuff from http://stackoverflow.com/questions/11789038/does-r-have-a-priority-queue-like-javas-priorityqueue
-#   
-# You could probably create this quite easily yourself, either using classes (Reference classes fit best),
-# or using a data.frame with a custom type, combined with some functions that operate on it
-# (add_to_queue(element, queue_object, priority), get_item(queue_object)). These functions would be the methods
-# in case of the reference class. I like the reference class solution better as it stores both the state and the
-# logic in one place.
-# 
-# You can use the following implementation from Rosetta Code, but beware that insertion takes O(n log n)
-# 
-# PriorityQueue <- function() {
-#   keys <<- values <<- NULL
-#   insert <- function(key, value) {
-#     temp <- c(keys, key)
-#     ord <- order(temp)
-#     keys <<- temp[ord]
-#     values <<- c(values, list(value))[ord]
-#   }
-#   pop <- function() {
-#     head <- values[[1]]
-#     values <<- values[-1]
-#     keys <<- keys[-1]
-#     return(head)
-#   }
-#   empty <- function() length(keys) == 0
-#   list(insert = insert, pop = pop, empty = empty)
-# }
+# According to Wikipedia:
+#
+# In computer science/data structure, a priority queue is an abstract data type which is like a regular queue or stack
+# data structure, but where additionally each element has a "priority" associated with it. In a priority queue, an
+# element with high priority is served before an element with low priority. If two elements have the same priority,
+# they are served according to their order in the queue.
 
-PriorityQueue <- setRefClass("PriorityQueue", contains = "Queue")
+# Items are sorted at insertion and, as a result, this operation takes O(n log n).
+#
+# The call to sort() needs to accomplish two things:
+#
+# 1. reorder priorities if they differ and
+# 2. leave in order of insertion if priorities are the same.
+#
+# See Wikipedia definition for why this is necessary.
+#
+PriorityQueue <- setRefClass("PriorityQueue",
+                             contains = "Queue",
+                             fields = list(
+                               priorities = "numeric"
+                             ),
+                             methods = list(
+                               push = function(item, priority) {
+                                 'Inserts element into the queue, reordering according to priority.'
+                                 callSuper(item)
+                                 priorities <<- c(priorities, priority)
+                                 #
+                                 order = order(priorities, decreasing = TRUE, partial = size():1)
+                                 #
+                                 data <<- data[order]
+                                 priorities <<- priorities[order]
+                               },
+                               #
+                               pop = function() {
+                                 'Removes and returns head of queue (or raises error if queue is empty).'
+                                 if (size() == 0) stop("queue is empty!")
+                                 priorities <<- priorities[-1]
+                                 callSuper()
+                               })
+)
