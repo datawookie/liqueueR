@@ -75,3 +75,15 @@ q4$poll()
 q4$pop()
 q4$priorities
 q4$poll()
+
+# Test iterator functionality
+#
+q5 <- Queue$new()
+#
+for (n in 1:10) q5$push(n)
+#
+i5 <- q5$iterator()
+#
+while (hasNext(i5)) {
+  print(nextElem(i5))
+}

@@ -6,6 +6,9 @@
 #
 # ---------------------------------------------------------------------------------------------------------------------
 
+library(iterators)
+library(itertools)
+
 # BASIC QUEUE ---------------------------------------------------------------------------------------------------------
 
 # Create a generator object
@@ -47,6 +50,9 @@ Queue <- setRefClass(Class = "Queue",
                          #
                          if (length(pos) == 1) return(data[[pos]])
                          else return(data[pos])
+                       },
+                       iterator = function() {
+                         return(ihasNext(data))
                        },
                        initialize=function(...) {
                          callSuper(...)
