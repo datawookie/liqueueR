@@ -30,12 +30,16 @@ Queue <- setRefClass(Class = "Queue",
                          data[[size()+1]] <<- item
                        },
                        #
-                       pop = function() {
-                         'Removes and returns head of queue (or raises error if queue is empty).'
+                       pop = function(N = 1) {
+                         'Removes and returns head of queue (or raises error if queue is empty). N is number of items to pop.'
                          if (size() == 0) stop("queue is empty!")
-                         value <- data[[1]]
-                         data[[1]] <<- NULL
-                         value
+                         if (N == 1) {
+                           value <- data[[1]]
+                         } else {
+                           value <- data[1:N]
+                         }
+                         data[1:N] <<- NULL
+                         return(value)
                        },
                        #
                        poll = function() {
@@ -88,7 +92,7 @@ PriorityQueue <- setRefClass("PriorityQueue",
                                priorities = "numeric"
                              ),
                              methods = list(
-                               push = function(item, priority) {
+                               push = function(item, priority = 0) {
                                  'Inserts element into the queue, reordering according to priority.'
                                  callSuper(item)
                                  priorities <<- c(priorities, priority)
@@ -99,10 +103,10 @@ PriorityQueue <- setRefClass("PriorityQueue",
                                  priorities <<- priorities[order]
                                },
                                #
-                               pop = function() {
+                               pop = function(N = 1) {
                                  'Removes and returns head of queue (or raises error if queue is empty).'
                                  if (size() == 0) stop("queue is empty!")
-                                 priorities <<- priorities[-1]
-                                 callSuper()
+                                 priorities <<- priorities[-c(1:N)]
+                                 callSuper(N)
                                })
 )

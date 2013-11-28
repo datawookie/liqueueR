@@ -87,3 +87,20 @@ i5 <- q5$iterator()
 while (hasNext(i5)) {
   print(nextElem(i5))
 }
+
+# Test popping multiple items
+#
+q6 <- Queue$new()
+#
+for (n in 1:10) q6$push(n)
+#
+q6$pop(1)
+q6$pop(3)
+#
+q6 <- PriorityQueue$new()
+#
+for (n in 1:10) q6$push(n, sample(1:3, 1))
+#
+q6$pop(1)
+q6$pop(3)
+q6$pop(6)
