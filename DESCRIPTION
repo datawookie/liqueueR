@@ -1,0 +1,10 @@
+Package: liqueueR
+Type: Package
+Title: Implements Queue and Priority Queue classes
+Version: 0.0.1
+Authors@R: person("Andrew", "Collier", email = "andrew@exegetic.biz", role = c("aut", "cre"))
+Description: Provides two classes: Queue and PriorityQueue. The former is just a "plain vanilla" queue, while the latter orders items according to priority.
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
+Suggests: testthat

@@ -2,7 +2,9 @@
 #
 # * http://adv-r.had.co.nz/R5.html [reference classes]
 # * http://www.inside-r.org/r-doc/methods/ReferenceClasses [reference classes]
+# * http://www.milanor.net/blog/?p=1234 [S4 classes]
 # * http://stackoverflow.com/questions/11789038/does-r-have-a-priority-queue-like-javas-priorityqueue
+# * http://fishyoperations.com/2016/04/11/queuing-systems.html
 #
 # ---------------------------------------------------------------------------------------------------------------------
 
@@ -48,17 +50,18 @@ Queue <- setRefClass(Class = "Queue",
                          else pop()
                        },
                        #
-                       peek = function(pos = c(1)) {
-                         'Returns (but does not remove) specified positions in queue (or NULL if any one of them is not available).'
+                       peek = function(pos = c(1), as.list = FALSE) {
+                         'Returns (but does not remove) specified positions in queue (or NULL if any one of them is not available).
+                         The as.list argument will cause a list to be returned even if only one element requested.'
                          if (size() < max(pos)) return(NULL)
                          #
-                         if (length(pos) == 1) return(data[[pos]])
+                         if (length(pos) == 1 & !as.list) return(data[[pos]])
                          else return(data[pos])
                        },
                        iterator = function() {
                          return(ihasNext(data))
                        },
-                       initialize=function(...) {
+                       initialize = function(...) {
                          callSuper(...)
                          #
                          # Initialise fields here (place holder)...
