@@ -13,8 +13,10 @@ library(itertools)
 
 # BASIC QUEUE ---------------------------------------------------------------------------------------------------------
 
-# Create a generator object
-#
+#' A Queue reference class.
+#' @field name A name for the queue.
+#' @field data Initial data to populate the queue.
+#' @exportClass Queue
 Queue <- setRefClass(Class = "Queue",
                      fields = list(
                        name = "character",
@@ -88,7 +90,12 @@ Queue <- setRefClass(Class = "Queue",
 # 2. leave in order of insertion if priorities are the same.
 #
 # See Wikipedia definition for why this is necessary.
-#
+
+#' A PriorityQueue reference class.
+#' @field name A name for the queue.
+#' @field data Initial data to populate the queue.
+#' @field priorities Numeric queue priorities.
+#' @exportClass PriorityQueue
 PriorityQueue <- setRefClass("PriorityQueue",
                              contains = "Queue",
                              fields = list(
