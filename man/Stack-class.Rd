@@ -4,15 +4,13 @@
 \name{Stack-class}
 \alias{Stack}
 \alias{Stack-class}
-\title{A Stack reference class.}
+\title{A Stack reference class}
 \description{
-A Stack reference class.
+Derived from the Queue class.
 }
 \section{Fields}{
 
 \describe{
-\item{\code{name}}{A name for the stack.}
-
 \item{\code{data}}{Initial data to populate the stack.}
 }}
 \section{Methods}{
@@ -20,4 +18,7 @@ A Stack reference class.
 \describe{
 \item{\code{push(item)}}{Inserts element at back of the queue.}
 }}
+\seealso{
+\code{\link{Queue-class}} for information on base class.
+}
 

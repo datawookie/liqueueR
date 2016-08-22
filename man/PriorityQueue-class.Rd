@@ -4,15 +4,13 @@
 \name{PriorityQueue-class}
 \alias{PriorityQueue}
 \alias{PriorityQueue-class}
-\title{A PriorityQueue reference class.}
+\title{A PriorityQueue reference class}
 \description{
-A PriorityQueue reference class.
+Derived from the Queue class.
 }
 \section{Fields}{
 
 \describe{
-\item{\code{name}}{A name for the queue.}
-
 \item{\code{data}}{Initial data to populate the queue.}
 
 \item{\code{priorities}}{Numeric queue priorities.}
@@ -24,4 +22,7 @@ A PriorityQueue reference class.
 
 \item{\code{push(item)}}{Inserts element at back of the queue.}
 }}
+\seealso{
+\code{\link{Queue-class}} for information on base class.
+}
 

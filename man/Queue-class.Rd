@@ -4,15 +4,13 @@
 \name{Queue-class}
 \alias{Queue}
 \alias{Queue-class}
-\title{A Queue reference class.}
+\title{A Queue reference class}
 \description{
-A Queue reference class.
+A Queue reference class
 }
 \section{Fields}{
 
 \describe{
-\item{\code{name}}{A name for the queue.}
-
 \item{\code{data}}{Initial data to populate the queue.}
 }}
 \section{Methods}{
@@ -29,4 +27,13 @@ The as.list argument will cause a list to be returned even if only one element r
 
 \item{\code{size()}}{Returns the number of items in the queue.}
 }}
+\examples{
+queue <- Queue$new()
+queue$push("one")
+queue$push(2)
+queue$push("three")
+queue$size()
+queue$pop()
+queue$poll()
+}
 
