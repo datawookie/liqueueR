@@ -12,7 +12,6 @@ devtools::install_github("DataWookie/liqueueR")
 ## To Do
 
 - Implement tests.
-- Add a Stack class.
 
 ## Queue
 

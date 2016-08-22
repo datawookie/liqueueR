@@ -17,6 +17,7 @@ library(itertools)
 #' @field name A name for the queue.
 #' @field data Initial data to populate the queue.
 #' @exportClass Queue
+#' @export Queue
 Queue <- setRefClass(Class = "Queue",
                      fields = list(
                        name = "character",
@@ -96,6 +97,7 @@ Queue <- setRefClass(Class = "Queue",
 #' @field data Initial data to populate the queue.
 #' @field priorities Numeric queue priorities.
 #' @exportClass PriorityQueue
+#' @export PriorityQueue
 PriorityQueue <- setRefClass("PriorityQueue",
                              contains = "Queue",
                              fields = list(
@@ -119,4 +121,20 @@ PriorityQueue <- setRefClass("PriorityQueue",
                                  priorities <<- priorities[-c(1:N)]
                                  callSuper(N)
                                })
+)
+
+# STACK ---------------------------------------------------------------------------------------------------------------
+
+#' A Stack reference class.
+#' @field name A name for the stack.
+#' @field data Initial data to populate the stack.
+#' @exportClass Stack
+#' @export Stack
+Stack <- setRefClass("Stack",
+                     contains = "Queue",
+                     methods = list(
+                       push = function(item) {
+                         'Pushes item onto the stack.'
+                         data <<- c(item, data)
+                       })
 )
