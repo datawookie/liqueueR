@@ -5,17 +5,13 @@
 # * http://www.milanor.net/blog/?p=1234 [S4 classes]
 # * http://stackoverflow.com/questions/11789038/does-r-have-a-priority-queue-like-javas-priorityqueue
 # * http://fishyoperations.com/2016/04/11/queuing-systems.html
-#
-# ---------------------------------------------------------------------------------------------------------------------
-
-library(iterators)
-library(itertools)
 
 # BASIC QUEUE ---------------------------------------------------------------------------------------------------------
 
 #' A Queue reference class.
 #' @field name A name for the queue.
 #' @field data Initial data to populate the queue.
+#' @import itertools
 #' @exportClass Queue
 #' @export Queue
 Queue <- setRefClass(Class = "Queue",
