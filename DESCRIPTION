@@ -1,15 +1,16 @@
 Package: liqueueR
 Type: Package
-Title: Implements Queue and PriorityQueue classes
+Title: Implements Queue, PriorityQueue and Stack Classes
 Version: 0.0.1
 Authors@R: person("Andrew", "Collier", email = "andrew@exegetic.biz", role = c("aut", "cre"))
-Description: Provides two classes: Queue and PriorityQueue. The former is just a
-    "plain vanilla" queue, while the latter orders items according to priority.
+Description: Provides three classes: Queue, PriorityQueue and Stack. Queue is just a
+    "plain vanilla" FIFO queue; PriorityQueue orders items according to priority. Stack implements LIFO.
+URL: https://github.com/DataWookie/liqueueR
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
 Imports:
-    itertools
+    itertools, methods
 Suggests:
-    testthat
+    testthat, iterators
 RoxygenNote: 5.0.1

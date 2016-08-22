@@ -8,15 +8,22 @@
 
 # BASIC QUEUE ---------------------------------------------------------------------------------------------------------
 
-#' A Queue reference class.
-#' @field name A name for the queue.
+#' A Queue reference class
 #' @field data Initial data to populate the queue.
 #' @import itertools
+#' @importFrom methods new
 #' @exportClass Queue
 #' @export Queue
+#' @examples
+#' queue <- Queue$new()
+#' queue$push("one")
+#' queue$push(2)
+#' queue$push("three")
+#' queue$size()
+#' queue$pop()
+#' queue$poll()
 Queue <- setRefClass(Class = "Queue",
                      fields = list(
-                       name = "character",
                        data = "list"
                      ),
                      methods = list(
@@ -88,10 +95,13 @@ Queue <- setRefClass(Class = "Queue",
 #
 # See Wikipedia definition for why this is necessary.
 
-#' A PriorityQueue reference class.
-#' @field name A name for the queue.
+#' A PriorityQueue reference class
+#' 
+#' Derived from the Queue class.
 #' @field data Initial data to populate the queue.
 #' @field priorities Numeric queue priorities.
+#' @seealso \code{\link{Queue-class}} for information on base class.
+#' @importFrom methods new
 #' @exportClass PriorityQueue
 #' @export PriorityQueue
 PriorityQueue <- setRefClass("PriorityQueue",
@@ -121,9 +131,12 @@ PriorityQueue <- setRefClass("PriorityQueue",
 
 # STACK ---------------------------------------------------------------------------------------------------------------
 
-#' A Stack reference class.
-#' @field name A name for the stack.
+#' A Stack reference class
+#' 
+#' Derived from the Queue class.
 #' @field data Initial data to populate the stack.
+#' @seealso \code{\link{Queue-class}} for information on base class.
+#' @importFrom methods new
 #' @exportClass Stack
 #' @export Stack
 Stack <- setRefClass("Stack",
