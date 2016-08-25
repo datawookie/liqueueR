@@ -70,8 +70,6 @@ Queue <- setRefClass(Class = "Queue",
                        initialize = function(...) {
                          callSuper(...)
                          #
-                         # Initialise fields here (place holder)...
-                         #
                          .self
                        }
                      )
@@ -95,6 +93,41 @@ Queue <- setRefClass(Class = "Queue",
 #
 # See Wikipedia definition for why this is necessary.
 
+GenericPriorityQueue <- setRefClass("GenericPriorityQueue",
+                                    contains = "Queue",
+                                    fields = list(
+                                      priorities = "numeric"
+                                    ),
+                                    methods = list(
+                                      sort_ = function() {
+                                        order = order(priorities, decreasing = TRUE, partial = size():1)
+                                        #
+                                        data <<- data[order]
+                                        priorities <<- priorities[order]
+                                      },
+                                      push = function(item, priority) {
+                                        'Inserts element into the queue, reordering according to priority.'
+                                        callSuper(item)
+                                        priorities <<- c(priorities, priority)
+                                        #
+                                        sort_()
+                                      },
+                                      #
+                                      pop = function(N = 1) {
+                                        'Removes and returns head of queue (or raises error if queue is empty).'
+                                        if (size() == 0) stop("queue is empty!")
+                                        priorities <<- priorities[-c(1:N)]
+                                        callSuper(N)
+                                      },
+                                      initialize = function(...) {
+                                        callSuper(...)
+                                        #
+                                        .self
+                                      }
+                                    )
+)
+
+
 #' A PriorityQueue reference class
 #' 
 #' Derived from the Queue class.
@@ -105,29 +138,55 @@ Queue <- setRefClass(Class = "Queue",
 #' @exportClass PriorityQueue
 #' @export PriorityQueue
 PriorityQueue <- setRefClass("PriorityQueue",
-                             contains = "Queue",
+                             contains = "GenericPriorityQueue",
                              fields = list(
                                priorities = "numeric"
                              ),
                              methods = list(
                                push = function(item, priority = 0) {
                                  'Inserts element into the queue, reordering according to priority.'
-                                 callSuper(item)
-                                 priorities <<- c(priorities, priority)
+                                 callSuper(item, priority)
                                  #
-                                 order = order(priorities, decreasing = TRUE, partial = size():1)
-                                 #
-                                 data <<- data[order]
-                                 priorities <<- priorities[order]
+                                 sort_()
                                },
-                               #
-                               pop = function(N = 1) {
-                                 'Removes and returns head of queue (or raises error if queue is empty).'
-                                 if (size() == 0) stop("queue is empty!")
-                                 priorities <<- priorities[-c(1:N)]
-                                 callSuper(N)
-                               })
+                               initialize = function(...) {
+                                 callSuper(...)
+                                 #
+                                 .self
+                               }
+                             )
 )
+
+#' @exportClass CustomPriorityQueue
+#' @export CustomPriorityQueue
+CustomPriorityQueue <- setRefClass("CustomPriorityQueue",
+                             contains = "GenericPriorityQueue",
+                             fields = list(
+                               prioritise = "function"
+                             ),
+                             methods = list(
+                               push = function(item) {
+                                 'Inserts element into the queue, reordering according to priority.'
+                                 callSuper(item, prioritise(item))
+                                 print(priorities)
+                               },
+                               initialize = function(prioritise, ...) {
+                                 callSuper(...)
+                                 #
+                                 .self$prioritise = prioritise
+                                 .self
+                               }
+                             )
+)
+
+
+# pq <- CustomPriorityQueue$new(prioritise = nchar)
+# 
+# pq$push("xxx")
+# pq$push("x")
+# pq$push("xxxx")
+# pq$push("xx")
+# print(pq$peek())
 
 # STACK ---------------------------------------------------------------------------------------------------------------
 
