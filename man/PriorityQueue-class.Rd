@@ -14,6 +14,8 @@ Derived from the Queue class.
 \item{\code{data}}{Initial data to populate the queue.}
 
 \item{\code{priorities}}{Numeric queue priorities.}
+
+\item{\code{prioritise}}{Function to calculate priorities from items.}
 }}
 \section{Methods}{
 

@@ -40,3 +40,25 @@ test_that("iterator functionality", {
   }
   expect_equal(items, 1:10)
 })
+
+test_that("calculated priority (abs)", {
+  queue <- PriorityQueue$new(prioritise = abs)
+  #
+  queue$push(5)
+  queue$push(3)
+  queue$push(-6)
+  queue$push(1)
+  #
+  expect_equal(unlist(queue$data), c(-6, 5, 3, 1))
+})
+
+test_that("calculated priority (x^2)", {
+  queue <- PriorityQueue$new(prioritise = function(x) x^2)
+  #
+  queue$push(5)
+  queue$push(3)
+  queue$push(-6)
+  queue$push(1)
+  #
+  expect_equal(unlist(queue$data), c(-6, 5, 3, 1))
+})

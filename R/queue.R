@@ -93,100 +93,59 @@ Queue <- setRefClass(Class = "Queue",
 #
 # See Wikipedia definition for why this is necessary.
 
-GenericPriorityQueue <- setRefClass("GenericPriorityQueue",
-                                    contains = "Queue",
-                                    fields = list(
-                                      priorities = "numeric"
-                                    ),
-                                    methods = list(
-                                      sort_ = function() {
-                                        order = order(priorities, decreasing = TRUE, partial = size():1)
-                                        #
-                                        data <<- data[order]
-                                        priorities <<- priorities[order]
-                                      },
-                                      push = function(item, priority) {
-                                        'Inserts element into the queue, reordering according to priority.'
-                                        callSuper(item)
-                                        priorities <<- c(priorities, priority)
-                                        #
-                                        sort_()
-                                      },
-                                      #
-                                      pop = function(N = 1) {
-                                        'Removes and returns head of queue (or raises error if queue is empty).'
-                                        if (size() == 0) stop("queue is empty!")
-                                        priorities <<- priorities[-c(1:N)]
-                                        callSuper(N)
-                                      },
-                                      initialize = function(...) {
-                                        callSuper(...)
-                                        #
-                                        .self
-                                      }
-                                    )
-)
-
 
 #' A PriorityQueue reference class
 #' 
 #' Derived from the Queue class.
 #' @field data Initial data to populate the queue.
 #' @field priorities Numeric queue priorities.
+#' @field prioritise Function to calculate priorities from items.
 #' @seealso \code{\link{Queue-class}} for information on base class.
 #' @importFrom methods new
 #' @exportClass PriorityQueue
 #' @export PriorityQueue
 PriorityQueue <- setRefClass("PriorityQueue",
-                             contains = "GenericPriorityQueue",
+                             contains = "Queue",
                              fields = list(
-                               priorities = "numeric"
-                             ),
-                             methods = list(
-                               push = function(item, priority = 0) {
-                                 'Inserts element into the queue, reordering according to priority.'
-                                 callSuper(item, priority)
-                                 #
-                                 sort_()
-                               },
-                               initialize = function(...) {
-                                 callSuper(...)
-                                 #
-                                 .self
-                               }
-                             )
-)
-
-#' @exportClass CustomPriorityQueue
-#' @export CustomPriorityQueue
-CustomPriorityQueue <- setRefClass("CustomPriorityQueue",
-                             contains = "GenericPriorityQueue",
-                             fields = list(
+                               priorities = "numeric",
                                prioritise = "function"
                              ),
                              methods = list(
-                               push = function(item) {
-                                 'Inserts element into the queue, reordering according to priority.'
-                                 callSuper(item, prioritise(item))
-                                 print(priorities)
+                               sort_ = function() {
+                                 order = order(priorities, decreasing = TRUE, partial = size():1)
+                                 #
+                                 data <<- data[order]
+                                 priorities <<- priorities[order]
                                },
-                               initialize = function(prioritise, ...) {
+                               push = function(item, priority = NULL) {
+                                 'Inserts element into the queue, reordering according to priority.'
+                                 callSuper(item)
+                                 #
+                                 if (is.null(priority)) priority = prioritise(item)
+                                 #
+                                 priorities <<- c(priorities, priority)
+                                 #
+                                 sort_()
+                               },
+                               pop = function(N = 1) {
+                                 'Removes and returns head of queue (or raises error if queue is empty).'
+                                 if (size() == 0) stop("queue is empty!")
+                                 priorities <<- priorities[-c(1:N)]
+                                 callSuper(N)
+                               },
+                               initialize = function(prioritise = NULL, ...) {
+                                 'Creates a PriorityQueue object.'
                                  callSuper(...)
                                  #
-                                 .self$prioritise = prioritise
+                                 if (is.null(prioritise)) 
+                                   .self$prioritise = function(x) 0
+                                 else
+                                   .self$prioritise = prioritise
+                                 #
                                  .self
                                }
                              )
 )
-
-
-# pq <- CustomPriorityQueue$new(prioritise = nchar)
-# 
-# pq$push("xxx")
-# pq$push("x")
-# pq$push("xxxx")
-# pq$push("xx")
-# print(pq$peek())
 
 # STACK ---------------------------------------------------------------------------------------------------------------
 
