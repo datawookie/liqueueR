@@ -62,3 +62,14 @@ test_that("calculated priority (x^2)", {
   #
   expect_equal(unlist(queue$data), c(-6, 5, 3, 1))
 })
+
+test_that("calculated priority (nchar)", {
+  queue <- PriorityQueue$new(prioritise = nchar)
+  #
+  queue$push("xxx")
+  queue$push("x")
+  queue$push("xxxxxxxxxx")
+  queue$push("xx")
+  #
+  expect_equal(unlist(queue$data), c("xxxxxxxxxx", "xxx", "xx", "x"))
+})
