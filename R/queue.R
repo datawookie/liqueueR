@@ -40,13 +40,16 @@ Queue <- setRefClass(Class = "Queue",
                        #
                        pop = function(N = 1) {
                          'Removes and returns head of queue (or raises error if queue is empty). N is number of items to pop.'
-                         if (size() == 0) stop("queue is empty!")
-                         if (N == 1) {
-                           value <- data[[1]]
-                         } else {
-                           value <- data[1:N]
-                         }
-                         data[1:N] <<- NULL
+                         if (N > size()) stop("insufficient items in queue!")
+                         #
+                         index <- seq_len(N)
+                         #
+                         value <- data[index]
+                         data[index] <<- NULL
+                         #
+                         if (length(value) == 0) value = NULL
+                         if (length(value) == 1) value = value[[1]]
+                         #
                          return(value)
                        },
                        #
@@ -128,9 +131,9 @@ PriorityQueue <- setRefClass("PriorityQueue",
                                  sort_()
                                },
                                pop = function(N = 1) {
-                                 'Removes and returns head of queue (or raises error if queue is empty).'
-                                 if (size() == 0) stop("queue is empty!")
-                                 priorities <<- priorities[-c(1:N)]
+                                 # 'Removes and returns head of queue (or raises error if queue is empty).'
+                                 if (N > size()) stop("insufficient items in queue!")
+                                 priorities <<- priorities[-seq_len(N)]
                                  callSuper(N)
                                },
                                initialize = function(prioritise = NULL, ...) {

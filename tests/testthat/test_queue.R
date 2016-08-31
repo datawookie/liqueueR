@@ -29,6 +29,10 @@ test_that("pop items off Queue", {
   expect_equal(queue$poll(), "three")
 })
 
+test_that("pop zero items off Queue", {
+  expect_null(queue$pop(0))
+})
+
 test_that("error when pop from empty Queue", {
   expect_error(queue$pop())
 })
