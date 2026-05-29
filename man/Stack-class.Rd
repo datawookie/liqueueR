@@ -2,8 +2,8 @@
 % Please edit documentation in R/queue.R
 \docType{class}
 \name{Stack-class}
-\alias{Stack}
 \alias{Stack-class}
+\alias{Stack}
 \title{A Stack reference class}
 \description{
 Derived from the Queue class.
@@ -13,12 +13,13 @@ Derived from the Queue class.
 \describe{
 \item{\code{data}}{Initial data to populate the stack.}
 }}
+
 \section{Methods}{
 
 \describe{
 \item{\code{push(item)}}{Inserts element at back of the queue.}
 }}
+
 \seealso{
 \code{\link{Queue-class}} for information on base class.
 }
-

@@ -1,6 +1,5 @@
-[![Build Status](https://travis-ci.org/DataWookie/liqueueR.svg?branch=master)](https://travis-ci.org/DataWookie/liqueueR)
 [![GitHub version](https://badge.fury.io/gh/DataWookie%2FliqueueR.svg)](https://badge.fury.io/gh/DataWookie%2FliqueueR)
-[![codecov.io](https://codecov.io/github/DataWookie/liqueueR/coverage.svg?branch=master)](https://codecov.io/github/DataWookie/liqueueR?branch=master)
+[![codecov](https://codecov.io/github/datawookie/liqueueR/graph/badge.svg)](https://app.codecov.io/github/datawookie/liqueueR)
 
 # liqueueR
 

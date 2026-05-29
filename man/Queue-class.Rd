@@ -2,8 +2,8 @@
 % Please edit documentation in R/queue.R
 \docType{class}
 \name{Queue-class}
-\alias{Queue}
 \alias{Queue-class}
+\alias{Queue}
 \title{A Queue reference class}
 \description{
 A Queue reference class
@@ -13,6 +13,7 @@ A Queue reference class
 \describe{
 \item{\code{data}}{Initial data to populate the queue.}
 }}
+
 \section{Methods}{
 
 \describe{
@@ -27,6 +28,7 @@ The as.list argument will cause a list to be returned even if only one element r
 
 \item{\code{size()}}{Returns the number of items in the queue.}
 }}
+
 \examples{
 queue <- Queue$new()
 queue$push("one")
@@ -36,4 +38,3 @@ queue$size()
 queue$pop()
 queue$poll()
 }
-

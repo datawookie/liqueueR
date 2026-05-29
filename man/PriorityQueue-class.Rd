@@ -2,8 +2,8 @@
 % Please edit documentation in R/queue.R
 \docType{class}
 \name{PriorityQueue-class}
-\alias{PriorityQueue}
 \alias{PriorityQueue-class}
+\alias{PriorityQueue}
 \title{A PriorityQueue reference class}
 \description{
 Derived from the Queue class.
@@ -17,6 +17,7 @@ Derived from the Queue class.
 
 \item{\code{prioritise}}{Function to calculate priorities from items.}
 }}
+
 \section{Methods}{
 
 \describe{
@@ -24,7 +25,7 @@ Derived from the Queue class.
 
 \item{\code{push(item)}}{Inserts element at back of the queue.}
 }}
+
 \seealso{
 \code{\link{Queue-class}} for information on base class.
 }
-
